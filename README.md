@@ -44,9 +44,6 @@ return [
 
 See imgcache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available effects and other config options.
 
-
-Also add the following code in your yii2 application configuration:
-
 ```php
 $config = [
     //....
