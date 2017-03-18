@@ -6,7 +6,6 @@
     "keywords": ["yii2", "image", "cache", "thumb", "effect", "resize", "filter", "action"],
     "homepage": "https://github.com/lireincore/yii2-imgcache",
     "license": "MIT",
-    "minimum-stability": "dev",
     "support": {
         "issues": "https://github.com/lireincore/yii2-imgcache/issues",
         "source": "https://github.com/lireincore/yii2-imgcache"
@@ -19,7 +18,7 @@
     ],
     "require": {
         "yiisoft/yii2": "^2.0.0",
-        "lireincore/imgcache": "*"
+        "lireincore/imgcache": "dev-master"
     },
     "autoload": {
         "psr-4": {

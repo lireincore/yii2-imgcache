@@ -20,7 +20,7 @@ class ImgCache extends Object
     /**
      * ImgCache constructor.
      *
-     * @param $config array|string|null
+     * @param $config array
      */
     public function __construct($config = [])
     {
@@ -29,6 +29,9 @@ class ImgCache extends Object
         parent::__construct($config);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         parent::init();
