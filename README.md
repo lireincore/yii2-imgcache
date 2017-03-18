@@ -6,7 +6,7 @@
 
 ## About
 
-The [ImgCache](https://github.com/lireincore/imgcache) integration for the Yii2 framework.
+The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration for the Yii2 framework.
 
 ## Install
 
@@ -42,7 +42,7 @@ return [
 ];
 ```
 
-See ImgCache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available effects and other config options.
+See `lireincore/imgcache` [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available effects and other config options.
 
 Also add the following code in your Yii2 application configuration:
 
@@ -66,7 +66,7 @@ Use in your code:
 $url = \Yii::$app->imgcache->url('origin', 'blog/image.jpg');
 ```
 
-See ImgCache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available functions.
+See `lireincore/imgcache` [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available functions.
 
 ## License
 
