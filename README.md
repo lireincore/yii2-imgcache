@@ -1,4 +1,4 @@
-# Imgcache Extension for Yii2
+# ImgCache Extension for Yii2
 
 [![Latest Stable Version](https://poser.pugx.org/lireincore/yii2-imgcache/v/stable)](https://packagist.org/packages/lireincore/yii2-imgcache)
 [![Total Downloads](https://poser.pugx.org/lireincore/yii2-imgcache/downloads)](https://packagist.org/packages/lireincore/yii2-imgcache)
@@ -6,16 +6,16 @@
 
 ## About
 
-The [imgcache](https://github.com/lireincore/imgcache) integration for the Yii2 framework.
+The [ImgCache](https://github.com/lireincore/imgcache) integration for the Yii2 framework.
 
 ## Install
 
-Add the `lireincore/yii2-imgcache` package to your `require` section in the `composer.json` file
+Add the `"lireincore/yii2-imgcache": "dev-master"` package to your `require` section in the `composer.json` file
 
 or
 
 ``` bash
-$ composer require lireincore/yii2-imgcache
+$ composer require lireincore/yii2-imgcache dev-master
 ```
 
 ## Usage
@@ -42,7 +42,9 @@ return [
 ];
 ```
 
-See imgcache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available effects and other config options.
+See ImgCache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available effects and other config options.
+
+Also add the following code in your Yii2 application configuration:
 
 ```php
 $config = [
@@ -64,7 +66,7 @@ Use in your code:
 $url = \Yii::$app->imgcache->url('origin', 'blog/image.jpg');
 ```
 
-See imgcache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available functions.
+See ImgCache [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available functions.
 
 ## License
 
