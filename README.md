@@ -1,4 +1,4 @@
-# ImgCache Extension for Yii2
+# Image effect, thumb and cache extension for Yii2
 
 [![Latest Stable Version](https://poser.pugx.org/lireincore/yii2-imgcache/v/stable)](https://packagist.org/packages/lireincore/yii2-imgcache)
 [![Total Downloads](https://poser.pugx.org/lireincore/yii2-imgcache/downloads)](https://packagist.org/packages/lireincore/yii2-imgcache)
@@ -6,7 +6,7 @@
 
 ## About
 
-The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration for the Yii2 framework.
+The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration for Yii2 framework.
 
 ## Install
 
