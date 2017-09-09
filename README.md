@@ -15,7 +15,7 @@ Add the `"lireincore/yii2-imgcache": "dev-master"` package to your `require` sec
 or
 
 ``` bash
-$ composer require lireincore/yii2-imgcache dev-master
+$ php composer.phar require lireincore/yii2-imgcache dev-master
 ```
 
 ## Usage

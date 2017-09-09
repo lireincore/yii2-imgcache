@@ -1,7 +1,6 @@
 {
     "name": "lireincore/yii2-imgcache",
     "description": "The imgcache integration for the Yii2 framework",
-    "version": "0.1.0",
     "type": "yii2-extension",
     "keywords": ["yii2", "image", "cache", "thumb", "effect", "resize", "filter", "action"],
     "homepage": "https://github.com/lireincore/yii2-imgcache",
