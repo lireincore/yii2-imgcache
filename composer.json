@@ -1,6 +1,6 @@
 {
     "name": "lireincore/yii2-imgcache",
-    "description": "The imgcache integration for the Yii2 framework",
+    "description": "The lireincore/imgcache integration for the Yii2 framework",
     "type": "yii2-extension",
     "keywords": ["yii2", "image", "cache", "thumb", "effect", "resize", "filter", "action"],
     "homepage": "https://github.com/lireincore/yii2-imgcache",
@@ -12,12 +12,12 @@
     "authors": [
         {
             "name": "lirein",
-            "email": "lirein@inbox.ru"
+            "email": "lireincore@gmail.com"
         }
     ],
     "require": {
-        "yiisoft/yii2": "^2.0.0",
-        "lireincore/imgcache": "dev-master"
+        "yiisoft/yii2": "^2.0.13",
+        "lireincore/imgcache": "~0.2.0"
     },
     "autoload": {
         "psr-4": {

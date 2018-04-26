@@ -3,9 +3,11 @@
 namespace LireinCore\Yii2ImgCache;
 
 use Yii;
-use yii\base\Object;
+use yii\base\BaseObject;
+use LireinCore\ImgCache\Config;
+use LireinCore\ImgCache\Exception\ConfigException;
 
-class ImgCache extends Object
+class ImgCache extends BaseObject
 {
     /**
      * @var array
@@ -20,17 +22,15 @@ class ImgCache extends Object
     /**
      * ImgCache constructor.
      *
-     * @param $config array
+     * @param array $config
      */
     public function __construct($config = [])
     {
-        $this->_imgcache = new \LireinCore\ImgCache\ImgCache();
-
         parent::__construct($config);
     }
 
     /**
-     * @inheritdoc
+     * @throws ConfigException
      */
     public function init()
     {
@@ -81,18 +81,23 @@ class ImgCache extends Object
                                 if (isset($effect['params']['path'])) {
                                     $config['presets'][$presetName]['effects'][$ind]['params']['path'] = Yii::getAlias($effect['params']['path']);
                                 }
+                            } elseif ($effect['type'] == 'text') {
+                                if (isset($effect['params']['font'])) {
+                                    $config['presets'][$presetName]['effects'][$ind]['params']['font'] = Yii::getAlias($effect['params']['font']);
+                                }
                             }
                         }
                     }
                 }
             }
 
-            $this->_imgcache->setConfig($config);
+            $this->_imgcache = new \LireinCore\ImgCache\ImgCache($config);
         }
     }
 
     /**
-     * @param $config array|string
+     * @param array $config
+     * @throws ConfigException
      */
     public function setConfig($config)
     {
@@ -100,11 +105,19 @@ class ImgCache extends Object
     }
 
     /**
+     * @return Config
+     */
+    public function getConfig()
+    {
+        return $this->_imgcache->getConfig();
+    }
+
+    /**
      * @param string $presetName
      * @param string|null $fileRelPath
      * @param bool $usePlug
-     *
-     * @return bool|string
+     * @return null|string
+     * @throws ConfigException
      */
     public function path($presetName, $fileRelPath = null, $usePlug = true)
     {
@@ -118,8 +131,8 @@ class ImgCache extends Object
      * @param string|null $fileRelPath
      * @param bool $absolute
      * @param bool $usePlug
-     *
-     * @return bool|string
+     * @return null|string
+     * @throws ConfigException
      */
     public function url($presetName = null, $fileRelPath = null, $absolute = false, $usePlug = true)
     {
@@ -131,6 +144,7 @@ class ImgCache extends Object
     /**
      * @param string $fileRelPath
      * @param string|null $presetName
+     * @throws ConfigException
      */
     public function clearFileThumbs($fileRelPath, $presetName = null)
     {
@@ -140,6 +154,7 @@ class ImgCache extends Object
 
     /**
      * @param string|null $presetName
+     * @throws ConfigException
      */
     public function clearPlugsThumbs($presetName = null)
     {
@@ -148,6 +163,7 @@ class ImgCache extends Object
 
     /**
      * @param string $presetName
+     * @throws ConfigException
      */
     public function clearPresetThumbs($presetName)
     {
