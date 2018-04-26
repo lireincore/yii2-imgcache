@@ -10,12 +10,12 @@ The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration fo
 
 ## Install
 
-Add the `"lireincore/yii2-imgcache": "dev-master"` package to your `require` section in the `composer.json` file
+Add the `"lireincore/yii2-imgcache": "~0.1.0"` package to your `require` section in the `composer.json` file
 
 or
 
 ``` bash
-$ php composer.phar require lireincore/yii2-imgcache dev-master
+$ php composer.phar require lireincore/yii2-imgcache
 ```
 
 ## Usage
