@@ -20,7 +20,7 @@ $ php composer.phar require lireincore/yii2-imgcache
 
 ## Usage
 
-To use this extension, you need create the `imgcache.php` file in your `config` folder and add this example code:
+To use this extension, you need to create the `imgcache.php` file in your `config` folder and add this code:
 
 ```php
 <?php

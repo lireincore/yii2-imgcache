@@ -2,7 +2,7 @@
     "name": "lireincore/yii2-imgcache",
     "description": "The lireincore/imgcache integration for the Yii2 framework",
     "type": "yii2-extension",
-    "keywords": ["yii2", "image", "cache", "thumb", "effect", "resize", "filter", "action"],
+    "keywords": ["yii2", "image", "cache", "preset", "thumb", "effect", "resize"],
     "homepage": "https://github.com/lireincore/yii2-imgcache",
     "license": "MIT",
     "support": {
