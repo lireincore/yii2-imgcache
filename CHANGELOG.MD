@@ -1,5 +1,13 @@
 # CHANGELOG
 
+### 0.3.0 (2018-08-07)
+
+  * Changed url() definition
+  * Changed path() definition
+  * Added stubPath() function
+  * Added stubUrl() function
+  * Code refactoring
+
 ### 0.2.1 (2018-05-07)
 
   * Fix documentation

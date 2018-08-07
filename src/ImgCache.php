@@ -4,7 +4,7 @@ namespace LireinCore\Yii2ImgCache;
 
 use Yii;
 use yii\base\BaseObject;
-use LireinCore\ImgCache\Config;
+use LireinCore\ImgCache\ImgCache as ImgCacheService;
 use LireinCore\ImgCache\Exception\ConfigException;
 
 class ImgCache extends BaseObject
@@ -15,16 +15,16 @@ class ImgCache extends BaseObject
     public $config;
 
     /**
-     * @var \LireinCore\ImgCache\ImgCache
+     * @var ImgCacheService
      */
-    private $_imgcache;
+    protected $imgcache;
 
     /**
      * ImgCache constructor.
      *
      * @param array $config
      */
-    public function __construct($config = [])
+    public function __construct(array $config)
     {
         parent::__construct($config);
     }
@@ -36,137 +36,125 @@ class ImgCache extends BaseObject
     {
         parent::init();
 
-        if (!empty($this->config)) {
-            $config = $this->config;
-
-            if (isset($config['srcdir'])) {
-                $config['srcdir'] = Yii::getAlias($config['srcdir']);
+        if (isset($this->config['srcdir'])) {
+            $this->config['srcdir'] = Yii::getAlias($this->config['srcdir']);
+        }
+        if (isset($this->config['destdir'])) {
+            $this->config['destdir'] = Yii::getAlias($this->config['destdir']);
+        }
+        if (isset($this->config['webdir'])) {
+            $this->config['webdir'] = Yii::getAlias($this->config['webdir']);
+        }
+        if (isset($this->config['baseurl'])) {
+            $this->config['baseurl'] = Yii::getAlias($this->config['baseurl']);
+        }
+        if (isset($this->config['plug'])) {
+            if (isset($this->config['plug']['path'])) {
+                $this->config['plug']['path'] = Yii::getAlias($this->config['plug']['path']);
             }
-            if (isset($config['destdir'])) {
-                $config['destdir'] = Yii::getAlias($config['destdir']);
-            }
-            if (isset($config['webdir'])) {
-                $config['webdir'] = Yii::getAlias($config['webdir']);
-            }
-            if (isset($config['baseurl'])) {
-                $config['baseurl'] = Yii::getAlias($config['baseurl']);
-            }
-            if (isset($config['plug'])) {
-                if (isset($config['plug']['path'])) {
-                    $config['plug']['path'] = Yii::getAlias($config['plug']['path']);
+        }
+        if (isset($this->config['presets'])) {
+            foreach ($this->config['presets'] as $presetName => $preset) {
+                if (isset($preset['srcdir'])) {
+                    $this->config['presets'][$presetName]['srcdir'] = Yii::getAlias($preset['srcdir']);
                 }
-            }
-            if (isset($config['presets'])) {
-                foreach ($config['presets'] as $presetName => $preset) {
-                    if (isset($preset['srcdir'])) {
-                        $config['presets'][$presetName]['srcdir'] = Yii::getAlias($preset['srcdir']);
+                if (isset($preset['destdir'])) {
+                    $this->config['presets'][$presetName]['destdir'] = Yii::getAlias($preset['destdir']);
+                }
+                if (isset($preset['webdir'])) {
+                    $this->config['presets'][$presetName]['webdir'] = Yii::getAlias($preset['webdir']);
+                }
+                if (isset($preset['baseurl'])) {
+                    $this->config['presets'][$presetName]['baseurl'] = Yii::getAlias($preset['baseurl']);
+                }
+                if (isset($preset['plug'])) {
+                    if (isset($preset['plug']['path'])) {
+                        $this->config['presets'][$presetName]['plug']['path'] = Yii::getAlias($preset['plug']['path']);
                     }
-                    if (isset($preset['destdir'])) {
-                        $config['presets'][$presetName]['destdir'] = Yii::getAlias($preset['destdir']);
-                    }
-                    if (isset($preset['webdir'])) {
-                        $config['presets'][$presetName]['webdir'] = Yii::getAlias($preset['webdir']);
-                    }
-                    if (isset($preset['baseurl'])) {
-                        $config['presets'][$presetName]['baseurl'] = Yii::getAlias($preset['baseurl']);
-                    }
-                    if (isset($preset['plug'])) {
-                        if (isset($preset['plug']['path'])) {
-                            $config['presets'][$presetName]['plug']['path'] = Yii::getAlias($preset['plug']['path']);
-                        }
-                    }
-                    if (isset($preset['effects'])) {
-                        foreach ($preset['effects'] as $ind => $effect) {
-                            if ($effect['type'] == 'overlay') {
-                                if (isset($effect['params']['path'])) {
-                                    $config['presets'][$presetName]['effects'][$ind]['params']['path'] = Yii::getAlias($effect['params']['path']);
-                                }
-                            } elseif ($effect['type'] == 'text') {
-                                if (isset($effect['params']['font'])) {
-                                    $config['presets'][$presetName]['effects'][$ind]['params']['font'] = Yii::getAlias($effect['params']['font']);
-                                }
+                }
+                if (isset($preset['effects'])) {
+                    foreach ($preset['effects'] as $ind => $effect) {
+                        if ($effect['type'] == 'overlay') {
+                            if (isset($effect['params']['path'])) {
+                                $this->config['presets'][$presetName]['effects'][$ind]['params']['path'] = Yii::getAlias($effect['params']['path']);
+                            }
+                        } elseif ($effect['type'] == 'text') {
+                            if (isset($effect['params']['font'])) {
+                                $this->config['presets'][$presetName]['effects'][$ind]['params']['font'] = Yii::getAlias($effect['params']['font']);
                             }
                         }
                     }
                 }
             }
-
-            $this->_imgcache = new \LireinCore\ImgCache\ImgCache($config);
         }
+
+        $this->imgcache = new ImgCacheService($this->config);
     }
 
     /**
-     * @param array $config
-     * @throws ConfigException
-     */
-    public function setConfig($config)
-    {
-        $this->_imgcache->setConfig($config);
-    }
-
-    /**
-     * @return Config
-     */
-    public function getConfig()
-    {
-        return $this->_imgcache->getConfig();
-    }
-
-    /**
-     * @param string $presetName
-     * @param string|null $fileRelPath
-     * @param bool $usePlug
-     * @return null|string
-     * @throws ConfigException
-     */
-    public function path($presetName, $fileRelPath = null, $usePlug = true)
-    {
-        $fileRelPath = Yii::getAlias($fileRelPath);
-
-        return $this->_imgcache->path($presetName, $fileRelPath, $usePlug);
-    }
-
-    /**
-     * @param string|null $presetName
-     * @param string|null $fileRelPath
+     * @param string $srcRelPath relative path to source image
+     * @param string|array $preset preset name or dynamic preset definition
      * @param bool $absolute
-     * @param bool $usePlug
-     * @return null|string
+     * @param bool $useStub
+     * @return string
      * @throws ConfigException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
-    public function url($presetName = null, $fileRelPath = null, $absolute = false, $usePlug = true)
+    public function url($srcRelPath, $preset, $absolute = false, $useStub = true)
     {
-        $fileRelPath = Yii::getAlias($fileRelPath);
+        $srcRelPath = Yii::getAlias($srcRelPath);
 
-        return $this->_imgcache->url($presetName, $fileRelPath, $absolute, $usePlug);
+        return $this->imgcache->url($srcRelPath, $preset, $absolute, $useStub);
     }
 
     /**
-     * @param string $fileRelPath
-     * @param string|null $presetName
+     * @param string $srcRelPath relative path to source image
+     * @param string|array $preset preset name or dynamic preset definition
+     * @param bool $useStub
+     * @return string
      * @throws ConfigException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
-    public function clearFileThumbs($fileRelPath, $presetName = null)
+    public function path($srcRelPath, $preset, $useStub = true)
     {
-        $fileRelPath = Yii::getAlias($fileRelPath);
-        $this->_imgcache->clearFileThumbs($fileRelPath, $presetName);
+        $srcRelPath = Yii::getAlias($srcRelPath);
+
+        return $this->imgcache->path($srcRelPath, $preset, $useStub);
     }
 
     /**
-     * @param string|null $presetName
+     * @param string|array $preset preset name or dynamic preset definition
+     * @param bool $absolute
+     * @return string
      * @throws ConfigException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
      */
-    public function clearPlugsThumbs($presetName = null)
+    public function stubUrl($preset, $absolute = false)
     {
-        $this->_imgcache->clearPlugsThumbs($presetName);
+        return $this->stubUrl($preset, $absolute);
     }
 
     /**
-     * @param string $presetName
+     * @param string|array $preset preset name or dynamic preset definition
+     * @return string
+     * @throws ConfigException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     */
+    public function stubPath($preset)
+    {
+        return $this->stubPath($preset);
+    }
+
+    /**
+     * @param string|array|null $preset preset name or dynamic preset definition
      * @throws ConfigException
      */
-    public function clearPresetThumbs($presetName)
+    public function clearCache($preset = null)
     {
-        $this->_imgcache->clearFileThumbs($presetName);
+        $this->imgcache->clearCache($preset);
     }
 }

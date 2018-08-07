@@ -10,7 +10,7 @@ The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration fo
 
 ## Install
 
-Add the `"lireincore/yii2-imgcache": "~0.2.0"` package to your `require` section in the `composer.json` file
+Add the `"lireincore/yii2-imgcache": "~0.3.0"` package to your `require` section in the `composer.json` file
 
 or
 
@@ -63,7 +63,7 @@ Use in your code:
 
 ```php
 //get thumb url for image '{srcdir}/blog/image.jpg' (preset 'origin')
-$url = \Yii::$app->imgcache->url('origin', 'blog/image.jpg');
+$url = \Yii::$app->imgcache->url('blog/image.jpg', 'origin');
 ```
 
 See `lireincore/imgcache` [README.md](https://github.com/lireincore/imgcache/blob/master/README.md) for more information about the available functions.
