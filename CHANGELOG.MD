@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.3.1 (2018-08-12)
+
+  * Fix version
+
 ### 0.3.0 (2018-08-07)
 
   * Changed url() definition
