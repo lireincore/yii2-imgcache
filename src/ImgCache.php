@@ -52,6 +52,9 @@ class ImgCache extends BaseObject
             if (isset($this->config['plug']['path'])) {
                 $this->config['plug']['path'] = Yii::getAlias($this->config['plug']['path']);
             }
+            if (isset($this->config['plug']['url'])) {
+                $this->config['plug']['url'] = Yii::getAlias($this->config['plug']['url']);
+            }
         }
         if (isset($this->config['presets'])) {
             foreach ($this->config['presets'] as $presetName => $preset) {
@@ -70,6 +73,9 @@ class ImgCache extends BaseObject
                 if (isset($preset['plug'])) {
                     if (isset($preset['plug']['path'])) {
                         $this->config['presets'][$presetName]['plug']['path'] = Yii::getAlias($preset['plug']['path']);
+                    }
+                    if (isset($preset['plug']['url'])) {
+                        $this->config['presets'][$presetName]['plug']['url'] = Yii::getAlias($preset['plug']['url']);
                     }
                 }
                 if (isset($preset['effects'])) {
@@ -134,7 +140,7 @@ class ImgCache extends BaseObject
      */
     public function stubUrl($preset, $absolute = false)
     {
-        return $this->stubUrl($preset, $absolute);
+        return $this->imgcache->stubUrl($preset, $absolute);
     }
 
     /**
@@ -146,7 +152,7 @@ class ImgCache extends BaseObject
      */
     public function stubPath($preset)
     {
-        return $this->stubPath($preset);
+        return $this->imgcache->stubPath($preset);
     }
 
     /**

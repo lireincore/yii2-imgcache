@@ -1,5 +1,10 @@
 # CHANGELOG
 
+### 0.3.2 (2018-08-19)
+
+  * Fix function stubPath()
+  * Fix function stubUrl()
+
 ### 0.3.1 (2018-08-12)
 
   * Fix version
