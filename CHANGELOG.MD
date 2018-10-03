@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 0.3.3 (2018-10-03)
+
+  * Fixes
+
 ### 0.3.2 (2018-08-19)
 
   * Fix function stubPath()

@@ -10,7 +10,7 @@ The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration fo
 
 ## Install
 
-Add the `"lireincore/yii2-imgcache": "^0.3.1"` package to your `require` section in the `composer.json` file
+Add the `"lireincore/yii2-imgcache": "^0.3.3"` package to your `require` section in the `composer.json` file
 
 or
 

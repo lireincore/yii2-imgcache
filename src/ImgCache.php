@@ -24,7 +24,7 @@ class ImgCache extends BaseObject
      *
      * @param array $config
      */
-    public function __construct(array $config)
+    public function __construct(array $config = [])
     {
         parent::__construct($config);
     }
