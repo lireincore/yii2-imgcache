@@ -1,5 +1,11 @@
 # CHANGELOG
 
+### 0.4.0 (2019-02-18)
+
+  * Added type hinting
+  * Added support for PSR-3 logger
+  * Added support for event dispatch
+
 ### 0.3.3 (2018-10-03)
 
   * Fixes
