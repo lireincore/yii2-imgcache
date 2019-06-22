@@ -16,7 +16,7 @@
         }
     ],
     "require": {
-        "lireincore/imgcache": "^0.4",
+        "lireincore/imgcache": "^0.5",
         "yiisoft/yii2": "^2.0.13"
     },
     "autoload": {

@@ -10,7 +10,7 @@ The [lireincore/imgcache](https://github.com/lireincore/imgcache) integration fo
 
 ## Install
 
-Add the `"lireincore/yii2-imgcache": "^0.4"` package to your `require` section in the `composer.json` file
+Add the `"lireincore/yii2-imgcache": "^0.5"` package to your `require` section in the `composer.json` file
 
 or
 
@@ -71,11 +71,11 @@ use LireinCore\Yii2ImgCache\ImgCache;
 
 $imgCache = Yii::$container->get(ImgCache::class);
 
-//get thumb url for image '{srcdir}/blog/image.jpg' (preset 'origin')
+// get thumb url for image '{srcdir}/blog/image.jpg' (preset 'origin')
 $url = $imgcache->url('blog/image.jpg', 'origin');
 
 
-//get thumb url for image '{srcdir}/blog/image.jpg' (preset 'origin')
+// get thumb url for image '{srcdir}/blog/image.jpg' (preset 'origin')
 $url = \Yii::$app->imgcache->url('blog/image.jpg', 'origin');
 ```
 
