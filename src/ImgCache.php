@@ -3,10 +3,14 @@
 namespace LireinCore\Yii2ImgCache;
 
 use Yii;
+use RuntimeException;
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\EventDispatcher\EventDispatcherInterface;
-use LireinCore\ImgCache\ImgCache as ImgCacheService;
 use LireinCore\ImgCache\Exception\ConfigException;
+use LireinCore\ImgCache\ImgCache as ImgCacheService;
+use LireinCore\ImgCache\ImgProcessorFactoryInterface;
+use LireinCore\ImgCache\PathResolverFactoryInterface;
 
 final class ImgCache
 {
@@ -19,14 +23,18 @@ final class ImgCache
      * ImgCache constructor.
      *
      * @param array $config
-     * @param null|LoggerInterface $logger
-     * @param null|EventDispatcherInterface $eventDispatcher
+     * @param LoggerInterface|null $logger
+     * @param EventDispatcherInterface|null $eventDispatcher
+     * @param PathResolverFactoryInterface|null $pathResolverFactory
+     * @param ImgProcessorFactoryInterface|null $imgProcessorFactory
      * @throws ConfigException
      */
     public function __construct(
         array $config,
         ?LoggerInterface $logger = null,
-        ?EventDispatcherInterface $eventDispatcher = null
+        ?EventDispatcherInterface $eventDispatcher = null,
+        ?PathResolverFactoryInterface $pathResolverFactory = null,
+        ?ImgProcessorFactoryInterface $imgProcessorFactory = null
     )
     {
         if (isset($config['srcdir'])) {
@@ -56,20 +64,21 @@ final class ImgCache
             unset($preset);
         }
 
-        $this->imgcache = new ImgCacheService($config, $logger, $eventDispatcher);
+        $this->imgcache = new ImgCacheService($config, $logger, $eventDispatcher, $pathResolverFactory, $imgProcessorFactory);
     }
 
     /**
      * @param string $srcPath absolute or relative path to source image
      * @param string|array $preset preset name or dynamic preset definition
-     * @param bool $absolute
-     * @param bool $useStub
+     * @param bool $absolute return absolute url
+     * @param bool $useStub use a stub when the image is unavailable
+     * @param bool $createThumbIfNotExists check for a thumbnail and create one if it doesn't exist
      * @return string
      * @throws ConfigException
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function url(string $srcPath, $preset, bool $absolute = false, bool $useStub = true) : string
+    public function url(string $srcPath, $preset, bool $absolute = false, bool $useStub = true, bool $createThumbIfNotExists = true) : string
     {
         $srcPath = Yii::getAlias($srcPath);
 
@@ -77,19 +86,20 @@ final class ImgCache
             $this->processPresetDefinition($preset);
         }
 
-        return $this->imgcache->url($srcPath, $preset, $absolute, $useStub);
+        return $this->imgcache->url($srcPath, $preset, $absolute, $useStub, $createThumbIfNotExists);
     }
 
     /**
      * @param string $srcPath absolute or relative path to source image
      * @param string|array $preset preset name or dynamic preset definition
-     * @param bool $useStub
+     * @param bool $useStub use a stub when the image is unavailable
+     * @param bool $createThumbIfNotExists check for a thumbnail and create one if it doesn't exist
      * @return string
      * @throws ConfigException
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function path(string $srcPath, $preset, bool $useStub = true) : string
+    public function path(string $srcPath, $preset, bool $useStub = true, bool $createThumbIfNotExists = true) : string
     {
         $srcPath = Yii::getAlias($srcPath);
 
@@ -97,40 +107,42 @@ final class ImgCache
             $this->processPresetDefinition($preset);
         }
 
-        return $this->imgcache->path($srcPath, $preset, $useStub);
+        return $this->imgcache->path($srcPath, $preset, $useStub, $createThumbIfNotExists);
     }
 
     /**
      * @param string|array $preset preset name or dynamic preset definition
-     * @param bool $absolute
+     * @param bool $absolute return absolute url
+     * @param bool $createThumbIfNotExists check for a thumbnail and create one if it doesn't exist
      * @return string
      * @throws ConfigException
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function stubUrl($preset, bool $absolute = false) : string
+    public function stubUrl($preset, bool $absolute = false, bool $createThumbIfNotExists = true) : string
     {
         if (\is_array($preset)) {
             $this->processPresetDefinition($preset);
         }
 
-        return $this->imgcache->stubUrl($preset, $absolute);
+        return $this->imgcache->stubUrl($preset, $absolute, $createThumbIfNotExists);
     }
 
     /**
      * @param string|array $preset preset name or dynamic preset definition
+     * @param bool $createThumbIfNotExists check for a thumbnail and create one if it doesn't exist
      * @return string
      * @throws ConfigException
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
+     * @throws RuntimeException
+     * @throws InvalidArgumentException
      */
-    public function stubPath($preset) : string
+    public function stubPath($preset, bool $createThumbIfNotExists = true) : string
     {
         if (\is_array($preset)) {
             $this->processPresetDefinition($preset);
         }
 
-        return $this->imgcache->stubPath($preset);
+        return $this->imgcache->stubPath($preset, $createThumbIfNotExists);
     }
 
     /**
